@@ -1,27 +1,31 @@
-# Práctica #2 - API REST con Flask
+# API Docker Velaxing
 
 ## Descripción
 
-Este proyecto corresponde a la **Práctica #2** del curso **Desarrollo con Plataformas Abiertas**.
+Este proyecto consiste en una API REST desarrollada con Flask y ejecutada dentro de un contenedor Docker.
 
-Se desarrolló una API REST utilizando **Flask**, cumpliendo con los requisitos solicitados por el profesor y adaptando la temática al emprendimiento **Velaxing**, una marca de velas aromáticas artesanales.
+El objetivo del proyecto es demostrar cómo Docker permite empaquetar una aplicación junto con todas sus dependencias para que pueda ejecutarse de forma idéntica en cualquier computadora.
 
 ## Tecnologías utilizadas
 
-* Python 3.13
-* Flask
-* Flask-CORS
-* Postman
-* Git
-* GitHub
+- Python 3.13
+- Flask
+- Flask-CORS
+- Docker
+- Git
+- GitHub
 
-## Estructura del proyecto
+---
+
+# Estructura del proyecto
 
 ```text
-tareas-plataformas-abiertas
+api-docker
 │
-├── .gitignore
+├── Dockerfile
+├── README.md
 ├── requirements.txt
+├── .gitignore
 └── estudiantes
     └── data
         └── v1
@@ -32,41 +36,21 @@ tareas-plataformas-abiertas
                     └── velaxing.py
 ```
 
-## Instalación
+---
 
-Instalar las dependencias del proyecto:
+# Endpoints disponibles
 
-```bash
-py -m pip install -r requirements.txt
+## Endpoint 1 - Bienvenida
+
+**Método**
+
+```
+GET
 ```
 
-## Ejecución
+**Ruta**
 
-Ubicarse en la carpeta:
-
-```bash
-cd estudiantes/data/v1
 ```
-
-Ejecutar la API:
-
-```bash
-py run.py
-```
-
-La aplicación se ejecutará en:
-
-```text
-http://127.0.0.1:5000
-```
-
-## Endpoints disponibles
-
-### 1. Bienvenida
-
-**Método:** GET
-
-```text
 /estudiantes/api/v1/hola
 ```
 
@@ -80,11 +64,17 @@ http://127.0.0.1:5000
 
 ---
 
-### 2. Saludo personalizado
+## Endpoint 2 - Saludo personalizado
 
-**Método:** GET
+**Método**
 
-```text
+```
+GET
+```
+
+**Ruta**
+
+```
 /estudiantes/api/v1/saludo?nombre=Estefania
 ```
 
@@ -104,10 +94,106 @@ Si no se envía el parámetro **nombre**, la API devuelve:
 }
 ```
 
-## Pruebas
+---
 
-Los endpoints fueron probados utilizando **Postman** y también desde el navegador, verificando el correcto funcionamiento de la API y los códigos de respuesta HTTP correspondientes.
+# Ejecución con Docker
 
-## Autora
+## 1. Clonar el repositorio
 
-Estefanía Quesada
+```bash
+git clone https://github.com/velaxingcr/api-docker-velaxing.git
+```
+
+## 2. Ingresar al proyecto
+
+```bash
+cd api-docker-velaxing
+```
+
+## 3. Construir la imagen Docker
+
+```bash
+docker build -t api-docker-velaxing .
+```
+
+## 4. Ejecutar el contenedor
+
+```bash
+docker run -p 5000:5000 api-docker-velaxing
+```
+
+---
+
+# Probar la API
+
+Abrir en el navegador:
+
+```
+http://127.0.0.1:5000/estudiantes/api/v1/hola
+```
+
+o
+
+```
+http://127.0.0.1:5000/estudiantes/api/v1/saludo?nombre=Estefania
+```
+
+---
+
+# Dockerfile
+
+El proyecto utiliza el siguiente flujo para crear la imagen Docker:
+
+- Se utiliza una imagen oficial de Python 3.13.
+- Se define una carpeta de trabajo dentro del contenedor.
+- Se copian los archivos del proyecto.
+- Se instalan las dependencias desde `requirements.txt`.
+- Se expone el puerto 5000.
+- Finalmente se ejecuta la aplicación Flask mediante `run.py`.
+
+---
+
+# Comandos útiles de Docker
+
+Construir la imagen
+
+```bash
+docker build -t api-docker-velaxing .
+```
+
+Ejecutar el contenedor
+
+```bash
+docker run -p 5000:5000 api-docker-velaxing
+```
+
+Ver imágenes
+
+```bash
+docker images
+```
+
+Ver contenedores activos
+
+```bash
+docker ps
+```
+
+Ver todos los contenedores
+
+```bash
+docker ps -a
+```
+
+Detener un contenedor
+
+```bash
+docker stop <container_id>
+```
+
+---
+
+# Integrantes
+
+- Estefanía Quesada
+- Meilyn Flores
